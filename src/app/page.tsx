@@ -28,7 +28,7 @@ export default function Home() {
 								</span>
 							</h2>
 							<p className="text-sm opacity-60">
-								Kelola status member, durasi langganan, dan informasi member.
+								Silahkan kelola status member.
 							</p>
 						</Link>
 					</div>
