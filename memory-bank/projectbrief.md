@@ -1,25 +1,54 @@
-# Project Brief: Sistem Manajemen Member Wulang Chatwa
+# Project Brief: Wulang ChatWA
 
 ## Tujuan Proyek
-Membangun sistem manajemen member yang efisien dan terintegrasi untuk Wulang Chatwa, dengan kemampuan pengelolaan status member dan verifikasi melalui API.
+Mengembangkan sistem manajemen WhatsApp untuk bisnis yang memungkinkan pengelolaan member dan interaksi yang efisien.
 
 ## Fitur Utama
+1. Manajemen Member
+   - Pendaftaran dan pengelolaan status member
+   - Validasi nomor telepon (format 62xxx)
+   - Tracking status keanggotaan
 
-### 1. Manajemen Member
-- Pendaftaran member baru dengan validasi nomor telepon (format 62)
-- Pengelolaan status member (aktif/non-aktif)
-- Tampilan tabel member dengan informasi lengkap
-- Fungsi switch untuk mengubah status member
+2. DataTable Lanjutan
+   - Sorting
+   - Filtering
+   - Pagination
+   - Kustomisasi tampilan kolom
 
-### 2. API Integrasi
-- Endpoint `/api/cekmember` untuk verifikasi status member
-- Validasi format nomor telepon (62xxx)
-- Response sederhana (true/false) untuk status member
+3. API Services
+   - Cek status member
+   - Manajemen data member
+   - Integrasi WhatsApp
 
-### 3. Validasi Data
-- Format nomor telepon wajib diawali "62"
-- Panjang nomor telepon: 11-15 digit (termasuk "62")
-- Validasi input menggunakan Zod schema
+## Persyaratan Teknis
+- Next.js sebagai framework utama
+- Prisma untuk database management
+- Implementasi TypeScript
+- UI/UX yang modern dan responsif
+- Performa optimal dengan caching yang tepat
+
+## Prioritas Pengembangan
+1. Sistem manajemen member yang robust
+2. API yang aman dan efisien
+3. Interface yang user-friendly
+4. Optimasi performa dan caching
+
+## Batasan dan Ketentuan
+- Format nomor telepon harus menggunakan awalan 62
+- Validasi data yang ketat
+- Penanganan error yang komprehensif
+- Dokumentasi yang jelas untuk pengembang
+
+## Target Pengguna
+- Admin sistem
+- Staff manajemen
+- Member aktif
+
+## Metrik Kesuksesan
+- Waktu respons API < 500ms
+- Zero downtime untuk fitur kritis
+- Tingkat error < 1%
+- Kepuasan pengguna > 90%
 
 ## Spesifikasi Teknis
 

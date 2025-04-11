@@ -1,103 +1,123 @@
-# Pola Sistem
+# System Patterns
 
-## Arsitektur Aplikasi
-1. **Next.js App Router**
-   - Server Components untuk performa
-   - Client Components untuk interaktivitas
-   - Server Actions untuk operasi data
+## Arsitektur Sistem
 
-2. **Struktur Direktori**
-   ```
-   src/
-   ├── app/
-   │   └── member/
-   │       ├── member-types.ts
-   │       ├── member-validation.ts
-   │       ├── member-services.ts
-   │       ├── member-action.ts
-   │       ├── member-table.tsx
-   │       ├── member-add-modal.tsx
-   │       ├── member-delete-modal.tsx
-   │       └── page.tsx
-   ```
+### 1. Frontend Architecture
+```mermaid
+graph TD
+    A[Pages] --> B[Components]
+    B --> C[UI Components]
+    B --> D[Data Table]
+    D --> E[Column Header]
+    D --> F[Pagination]
+    D --> G[View Options]
+    B --> H[Forms]
+    C --> I[Shadcn/ui]
+```
 
-## Pola Desain
-1. **Pemisahan Kepentingan**
-   - Types: Definisi tipe data
-   - Validation: Schema validasi input
-   - Services: Operasi database
-   - Actions: Server actions
-   - Components: UI components
+### 2. API Architecture
+```mermaid
+graph TD
+    A[API Routes] --> B[Validation Layer]
+    B --> C[Service Layer]
+    C --> D[Database Layer]
+    D --> E[Prisma Client]
+```
 
-2. **Component Patterns**
-   - Atomic Design
-   - Composable Components
-   - Reusable UI Components
+## Design Patterns
 
-3. **State Management**
-   - Local State: useState
-   - Server State: Server Components
-   - Form State: react-hook-form
+### 1. Component Patterns
+- Atomic Design
+  - Atoms (basic UI components)
+  - Molecules (composite components)
+  - Organisms (complex components)
+  - Templates (page layouts)
+  - Pages (full views)
 
-## Pola Data
-1. **Schema Database**
-   ```prisma
-   model Member {
-     id        String   @id @default(uuid())
-     phone     String   @unique
-     isMember  Boolean  @default(false)
-     createdAt DateTime @default(now())
-     updatedAt DateTime @updatedAt
-   }
-   ```
+### 2. Data Management
+- Repository Pattern
+  - Abstraksi database operations
+  - Service layer untuk business logic
+  - Controllers untuk request handling
 
-2. **Validasi Data**
-   ```typescript
-   export const CreateMemberSchema = z.object({
-     phone: z.string()
-       .min(1, "Nomor telepon wajib diisi")
-       .regex(/^\d+$/, "Nomor telepon harus berupa angka")
-       .min(5, "Nomor telepon terlalu pendek")
-       .max(15, "Nomor telepon terlalu panjang"),
-     isMember: z.boolean()
-   });
-   ```
+### 3. State Management
+- Server State
+  - Database queries
+  - Cached responses
+- Client State
+  - UI state
+  - Form state
+  - Table state (sorting/filtering)
 
-## Pola Interaksi
-1. **Form Handling**
-   - Validasi client-side
-   - Server actions
-   - Error handling
-   - Loading states
+## Implementasi Patterns
 
-2. **Status Updates**
-   - Optimistic updates
-   - Real-time feedback
-   - Error recovery
+### 1. DataTable Pattern
+```typescript
+interface DataTableProps<TData, TValue> {
+    columns: ColumnDef<TData, TValue>[]
+    data: TData[]
+}
 
-3. **Modal Dialogs**
-   - Konfirmasi aksi
-   - Form input
-   - Loading states
+// Components:
+- DataTableColumnHeader
+- DataTablePagination
+- DataTableViewOptions
+```
 
-## Pola Error Handling
-1. **Client-side**
-   - Form validation
-   - Toast notifications
-   - Loading indicators
+### 2. API Pattern
+```typescript
+// Validation Schema
+const Schema = z.object({
+    phone: z.string()
+        .min(1, "Required")
+        .regex(/^62\d+$/, "Must start with 62")
+})
 
-2. **Server-side**
-   - Try-catch blocks
-   - Error messages
-   - Status codes
+// Service Layer
+async function handleRequest(data) {
+    // 1. Validate
+    // 2. Process
+    // 3. Respond
+}
+```
 
-## Pola Keamanan
-1. **Validasi Input**
+### 3. Error Handling Pattern
+```typescript
+try {
+    // Operation
+} catch (error) {
+    // Log error
+    // Return safe response
+}
+```
+
+## Caching Strategy
+1. Server-side
+   - Dynamic routes with revalidation
+   - No-store for real-time data
+   
+2. Client-side
+   - State management
+   - UI caching
+
+## Security Patterns
+1. Input Validation
    - Zod schemas
    - Type checking
-   - Sanitasi data
+   - Format validation
 
-2. **Server Actions**
-   - CSRF protection
-   - Rate limiting
-   - Error masking 
+2. API Security
+   - Request validation
+   - Error handling
+   - Safe responses
+
+## Testing Patterns
+1. Unit Tests
+   - Component testing
+   - Function testing
+   - Validation testing
+
+2. Integration Tests
+   - API endpoints
+   - Data flow
+   - User flows 

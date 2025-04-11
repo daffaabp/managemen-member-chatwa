@@ -1,62 +1,89 @@
-# Konteks Aktif
+# Active Context
 
-## Status Terkini
-- ✅ Implementasi dasar sistem member selesai
-- ✅ API cek member sudah berfungsi
-- ✅ Validasi nomor telepon diperbarui (format 62)
-- ✅ UI components dengan loading states
+## Current Focus
+1. DataTable Enhancement
+   - Implementasi sorting
+   - Implementasi filtering
+   - Implementasi pagination
+   - Kustomisasi tampilan kolom
 
-## Perubahan Terakhir
-1. API Cek Member
-   - Endpoint: `/api/cekmember`
-   - Response sederhana (true/false)
-   - Validasi format nomor 62xxx
+2. API Optimization
+   - Caching strategy
+   - Error handling
+   - Response optimization
 
-2. Validasi Nomor
-   - Format wajib: 62xxx
-   - Panjang: 11-15 digit
-   - Implementasi di semua form
+3. Member Management
+   - Status tracking
+   - Validasi data
+   - UI/UX improvement
 
-3. UI Updates
-   - Loading state pada switch status
-   - Feedback yang lebih baik
-   - Error handling yang konsisten
+## Recent Changes
 
-## Fokus Saat Ini
-1. Testing API cek member
-2. Monitoring performa sistem
-3. Dokumentasi penggunaan API
+### 1. DataTable Implementation
+- Added sorting functionality
+- Added filtering capability
+- Implemented pagination
+- Added column visibility options
 
-## Issues Aktif
-1. Performa
-   - Optimisasi query database
-   - Implementasi caching
+### 2. API Updates
+- Implemented caching strategy
+- Enhanced error handling
+- Optimized response format
 
-2. Keamanan
-   - Rate limiting untuk API
-   - Logging akses
+### 3. Caching Solutions
+- Implemented force-dynamic
+- Added noStore() for real-time data
+- Optimized revalidation
+
+## Active Decisions
+
+### 1. Caching Strategy
+- Using force-dynamic for real-time data
+- Implementing noStore() in service layer
+- Considering SWR/React Query (not urgent)
+
+### 2. API Design
+- Strict validation for phone numbers
+- Consistent error responses
+- Optimized performance
+
+### 3. UI/UX
+- Modern table interface
+- Responsive design
+- Intuitive controls
 
 ## Next Steps
-1. Implementasi rate limiting
-2. Setup monitoring
-3. Dokumentasi API lengkap
-4. Performance testing
 
-## Keputusan Teknis Terbaru
-1. Format Response API
-   - Menggunakan boolean sederhana
-   - Menghindari response yang kompleks
+### 1. Short Term
+- Fine-tune caching strategy
+- Optimize API performance
+- Enhance error handling
 
-2. Validasi
-   - Standarisasi format nomor
-   - Validasi konsisten di semua endpoint
+### 2. Medium Term
+- Add more table features
+- Improve documentation
+- Implement testing
 
-3. Error Handling
-   - Semua error return false
-   - Logging internal untuk debugging
+### 3. Long Term
+- Scale database
+- Add analytics
+- Enhance security
 
-## Catatan Penting
-- Semua nomor harus dalam format 62xxx
-- Response API dibuat sesederhana mungkin
-- Perhatikan performa saat scaling
-- Dokumentasi harus selalu diupdate 
+## Known Issues
+1. Caching
+   - Status switch refresh issues
+   - Need to optimize caching strategy
+
+2. Performance
+   - Large data set handling
+   - API response time
+
+3. UI/UX
+   - Mobile responsiveness
+   - Loading states
+
+## Current Status
+- DataTable: ✅ Implemented
+- API: ✅ Optimized
+- Caching: 🔄 In Progress
+- Documentation: 📝 Updating 
