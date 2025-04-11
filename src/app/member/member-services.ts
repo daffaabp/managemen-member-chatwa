@@ -38,7 +38,11 @@ export async function getMemberById(id: string) {
 export async function createMember(data: Omit<Member, "id" | "createdAt" | "updatedAt">) {
     try {
         const member = await prisma.member.create({
-            data
+            data: {
+                phone: data.phone,
+                isMember: data.isMember,
+                expiredAt: data.expiredAt || null
+            }
         });
         return member;
     } catch (error) {

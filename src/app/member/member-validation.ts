@@ -22,6 +22,12 @@ export const UpdateMemberStatusSchema = z.object({
         .max(1, "Status harus 0 atau 1")
 }).required();
 
+// Schema untuk update tanggal expired
+export const UpdateMemberExpiredSchema = z.object({
+    id: z.string().min(1, "ID member wajib diisi"),
+    expiredAt: z.date().nullable(),
+}).required();
+
 export type CreateMember = z.infer<typeof CreateMemberSchema>;
 export type DeleteMember = z.infer<typeof DeleteMemberSchema>;
 export type UpdateMemberStatus = z.infer<typeof UpdateMemberStatusSchema>;

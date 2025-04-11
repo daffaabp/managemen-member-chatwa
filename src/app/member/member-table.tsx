@@ -3,6 +3,13 @@
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
 import { DataTableViewOptions } from "@/components/ui/data-table-view-options";
 import { Input } from "@/components/ui/input";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import {
 	Table,
@@ -35,6 +42,14 @@ import { MemberUploadDialog } from "./member-upload-modal";
 interface MemberTableProps {
 	members: Member[];
 }
+
+const expiredFilterOptions = [
+	{ label: "Semua", value: "all" },
+	{ label: "Sudah Expired", value: "expired" },
+	{ label: "Expired 7 Hari", value: "expiring-soon" },
+	{ label: "Aktif", value: "active" },
+	{ label: "Tanpa Expired", value: "no-expiry" },
+];
 
 export function MemberTable({ members }: MemberTableProps) {
 	const [sorting, setSorting] = useState<SortingState>([]);
@@ -114,6 +129,26 @@ export function MemberTable({ members }: MemberTableProps) {
 						}
 						className="max-w-sm"
 					/>
+					<Select
+						value={
+							(table.getColumn("expiredAt")?.getFilterValue() as string) ??
+							"all"
+						}
+						onValueChange={(value) =>
+							table.getColumn("expiredAt")?.setFilterValue(value)
+						}
+					>
+						<SelectTrigger className="w-[180px]">
+							<SelectValue placeholder="Filter Expired" />
+						</SelectTrigger>
+						<SelectContent>
+							{expiredFilterOptions.map((option) => (
+								<SelectItem key={option.value} value={option.value}>
+									{option.label}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
 				</div>
 				<div className="flex items-center gap-2">
 					<DataTableViewOptions table={table} />
