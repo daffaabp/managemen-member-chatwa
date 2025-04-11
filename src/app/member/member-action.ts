@@ -1,12 +1,15 @@
 "use server";
+import { db } from "@/lib/db";
 import { actionClient } from "@/lib/safe-action";
+import { revalidatePath } from "next/cache";
+import type { z } from "zod";
 import {
     createMember,
-    getMemberByPhone,
     deleteMember,
+    getMemberByPhone,
     updateMemberStatus
 } from "./member-services";
-import { CreateMemberSchema, DeleteMemberSchema, UpdateMemberStatusSchema } from "./member-validation";
+import { CreateMemberSchema, DeleteMemberSchema, UpdateMemberExpiredSchema, UpdateMemberStatusSchema } from "./member-validation";
 
 export const createMemberAction = actionClient
     .schema(CreateMemberSchema)
@@ -20,7 +23,8 @@ export const createMemberAction = actionClient
 
             const member = await createMember({
                 phone: phone.toString(),
-                isMember: Boolean(isMember)
+                isMember: Boolean(isMember),
+                expiredAt: null // Set default expiredAt to null for new members
             });
             return { success: true, data: member };
         } catch {
@@ -51,3 +55,33 @@ export const updateMemberStatusAction = actionClient
             return { success: false, error: "Gagal mengubah status member" };
         }
     });
+
+export async function updateMemberExpiredAction(
+    data: z.infer<typeof UpdateMemberExpiredSchema>,
+) {
+    try {
+        const result = UpdateMemberExpiredSchema.safeParse(data);
+
+        if (!result.success) {
+            return {
+                error: result.error.issues[0]?.message || "Validasi gagal",
+            };
+        }
+
+        const { id, expiredAt } = result.data;
+
+        const member = await db.member.update({
+            where: { id },
+            data: { expiredAt },
+        });
+
+        revalidatePath("/member");
+
+        return { data: member };
+    } catch (error) {
+        console.error("Error updating member expired date:", error);
+        return {
+            error: "Gagal mengupdate tanggal expired member",
+        };
+    }
+}
